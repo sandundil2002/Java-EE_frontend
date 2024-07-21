@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
       data: studentJSON,
       contentType: "application/json; charset=utf-8",
       success: function (response) {
-        console.log("Success:", response);
+        swal("Student Saved!", response, "success");
       },
       error: function (xhr, status, error) {
-        console.error("Error:", status, error);
+        swal("Failed to Saved!", status, "error")
       },
     });
   });
