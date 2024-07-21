@@ -17,25 +17,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const studentJSON = JSON.stringify(student);
     console.log(studentJSON);
 
-    // Introduce AJAX
-    const http = new XMLHttpRequest();
-    http.onreadystatechange = function () {
-      if (http.readyState === 4) {
-        if (http.status === 200) {
-          var responseTextJSON = JSON.stringify(http.responseText);
-          console.log(responseTextJSON);
-        } else {
-          console.error("Failed");
-          console.error("Status " + http.status);
-          console.error("Ready state " + http.readyState);
-        }
-      } else {
-        console.error("Ready state " + http.readyState);
-      }
-    };
+    // // Introduce AJAX
+    // const http = new XMLHttpRequest();
+    // http.onreadystatechange = function () {
+    //   if (http.readyState === 4) {
+    //     if (http.status === 200) {
+    //       var responseTextJSON = JSON.stringify(http.responseText);
+    //       console.log(responseTextJSON);
+    //     } else {
+    //       console.error("Failed");
+    //       console.error("Status " + http.status);
+    //       console.error("Ready state " + http.readyState);
+    //     }
+    //   } else {
+    //     console.error("Ready state " + http.readyState);
+    //   }
+    // };
 
-    http.open("POST", "http://localhost:8080/sms/student", true);
-    http.setRequestHeader("Content-type", "application/json");
-    http.send(studentJSON);
+    // http.open("POST", "http://localhost:8080/sms/student", true);
+    // http.setRequestHeader("Content-type", "application/json");
+    // http.send(studentJSON);
+
+    // AJAX with jquery
+
+    $.ajax({
+      url: "http://localhost:8080/sms/student",
+      type: "POST",
+      data: studentJSON,
+      contentType: "application/json; charset=utf-8",
+      success: function (response) {
+        console.log("Success:", response);
+      },
+      error: function (xhr, status, error) {
+        console.error("Error:", status, error);
+      },
+    });
   });
 });
+
