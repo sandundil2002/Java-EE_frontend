@@ -38,7 +38,7 @@ $(document).ready(function () {
         }
       }
 
-      http.open("POST", "http://localhost:8080/sms/student");
+      http.open("POST", "http://localhost:8080/sms/student", true);
       http.setRequestHeader("Content-type", "application/json")
       http.send(student);
     })
