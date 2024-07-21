@@ -1,45 +1,41 @@
-$(document).ready(function () {
-    $("#registration-form").on("submit", function (event) {
-      event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("registration-form");
 
-      //Get values from the form input
-      var name = $("#name").val();
-      var email = $("#email").val();
-      var city = $("#city").val();
-      var level = $("#level").val();
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-      const student = {
-        name: name,
-        email: email,
-        city: city,
-        level: level,
-      };
+    const student = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      city: document.getElementById("city").value,
+      level: document.getElementById("level").value,
+    };
 
-      console.log(student);
+    console.log(student);
 
-      //create JSON
-      const studentJSON = JSON.stringify(student);
-      console.log(studentJSON);
+    // Create JSON
+    const studentJSON = JSON.stringify(student);
+    console.log(studentJSON);
 
-      //Introduce AJAX
-      const http = new XMLHttpRequest();
-      http.onreadystatechange = () => {
-        if (http.readyState == 4) {
-            if (http.status == 200) {
-                var responseTextJSON = JSON.stringify(http.responseText);
-                console.log(responseTextJSON);
-            } else {
-                console.error("Faild");
-                console.error("Status " + http.status);
-                console.error("Ready status " + http.readyState);
-            }
+    // Introduce AJAX
+    const http = new XMLHttpRequest();
+    http.onreadystatechange = function () {
+      if (http.readyState === 4) {
+        if (http.status === 200) {
+          var responseTextJSON = JSON.stringify(http.responseText);
+          console.log(responseTextJSON);
         } else {
-          console.error("Ready status " + http.readyState);
+          console.error("Failed");
+          console.error("Status " + http.status);
+          console.error("Ready state " + http.readyState);
         }
+      } else {
+        console.error("Ready state " + http.readyState);
       }
+    };
 
-      http.open("POST", "http://localhost:8080/sms/student", true);
-      http.setRequestHeader("Content-type", "application/json")
-      http.send(student);
-    })
-})
+    http.open("POST", "http://localhost:8080/sms/student", true);
+    http.setRequestHeader("Content-type", "application/json");
+    http.send(studentJSON);
+  });
+});
